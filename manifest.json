@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "PupilBot",
+    "version": "0.6",
+  
+    "description": "Сидит на дистанте за меня",
+    "icons": {
+      "48": "./dist/icon.png"
+    },
+    "action": {
+      "default_popup": "./dist/popup.html"
+    },
+    "permissions": [
+      "tabs",
+      "scripting",
+      "storage",
+      "activeTab"
+    ],
+    "host_permissions":[
+      "https://web.skype.com/*"
+    ],
+    "background": {
+      "service_worker": "dist/app.js"
+    }
+  }

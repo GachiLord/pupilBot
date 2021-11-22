@@ -1,0 +1,22 @@
+{
+  "name": "pupilbot",
+  "version": "0.6",
+  "description": "adds chat bot",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": "veb1",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "puppeteer-core": "^11.0.0",
+    "webpack": "^5.64.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
