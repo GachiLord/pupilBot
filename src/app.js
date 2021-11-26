@@ -20,10 +20,10 @@ chrome.runtime.onMessage.addListener(async (msg) => {
       break;
     default:
       await chrome.tabs.sendMessage( tabs.chat, msg );
-      console.log(msg);
+      console.log(tabs.chat);
       return;
   }
-  console.log(path)
+
   if ( tab.url.includes("skype") ) {
     chrome.scripting.executeScript(
       {

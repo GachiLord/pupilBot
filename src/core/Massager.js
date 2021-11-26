@@ -6,6 +6,7 @@ export default class Massager{
     constructor(){
         this.history = [];
         this.pos = 0;
+        this.latPos = 0;
     }
 
     static send(text){
@@ -62,12 +63,14 @@ export default class Massager{
             if ( forriben.includes(text) === false && /[0-9]+\:[0-9]+/.test(text) === false ) history.push( text);
         } );
 
+
         this.history = history;
+        console.log( this.pos, this.history.length );
         return this.history.slice( this.pos, this.history.length ).join(' ');
     }
 
     synPos(){
-        this.pos = this.history.length;
+        this.pos = this.history.length - 1;
     }
 
 }
