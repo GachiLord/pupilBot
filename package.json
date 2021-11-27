@@ -1,6 +1,6 @@
 {
   "name": "pupilbot",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "adds chat bot",
   "main": "src/app.js",
   "scripts": {
