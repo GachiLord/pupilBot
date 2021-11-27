@@ -6,7 +6,6 @@ module.exports = {
       app: './src/app.js',
       popup: './src/popup.js',
       process: './src/process.js',
-      chatWriter: './src/chatWriter.js'
   },
   mode: "production",
   output: {

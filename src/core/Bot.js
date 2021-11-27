@@ -1,3 +1,6 @@
+import chat from './Massager'
+
+
 export default class Bot{
     constructor(config, chat){
         this.config = config;
@@ -6,14 +9,13 @@ export default class Bot{
     }
 
     launch(){
-        const latency = 25; // >= 1 !!!
-        setInterval( () => {
+        const latency = 60; // >= 1 !!!
+        return setInterval( () => {
             let msg = this.chat.get().toLowerCase();
             let answer = this.getAnswer(msg);
-            this.chat.synPos();
 
-            console.log(msg, answer, this.lastAnswer);
-            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {chrome.runtime.sendMessage(answer); this.lastAnswer[answer] = { time: Math.floor(Date.now() / 1000) , pos: this.chat.pos }; }
+            //console.log(msg, answer, this.lastAnswer);
+            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {chat.send(answer); this.lastAnswer[answer] = { time: Math.floor(Date.now() / 1000) }; }
         }, 1500 )
     }
 
@@ -27,6 +29,8 @@ export default class Bot{
         for ( let item in this.config.questions.type[questionType] ) {
             if ( this.isEqual(input, item, 60) ) return this.config.questions.type[questionType][item];
         }
+
+        
     }
 
     isEqual(str1, str2, percent){
@@ -38,17 +42,16 @@ export default class Bot{
 
         question.forEach(element => {
             let q = element.trim().replace(/[,.?]/, '');
-            if (sample.includes( q ) && q.length > 2 ) {count++; sample = sample.replace(q, '')};
+            if ( sample.includes( q ) && q.length > 2 ) {count++; sample = sample.replace(q, ''); /*this.chat.set( q, '' );*/ };
         });
 
-        console.log(count * 100 / sample.split(' ').length, count, sample.split(' ').length, str1, sample);
+        //console.log(count * 100 / sample.split(' ').length, count, sample.split(' ').length, str1, sample);
         return ( count * 100 / sample.split(' ').length >= percent ) ? true: false;
     }
 
     answerIsNotOld(ans, r){
         if ( Object.keys(this.lastAnswer).includes(ans) ) {
-            console.log( this.chat.pos, this.lastAnswer[ans].pos );
-            return ( Math.floor(Date.now() / 1000) - this.lastAnswer[ans].time >= r && this.chat.pos !== this.lastAnswer[ans].pos ) ? true : false;
+            return ( Math.floor(Date.now() / 1000) - this.lastAnswer[ans].time >= r ) ? true : false;
         }
         else return true;
     }

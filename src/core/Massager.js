@@ -5,8 +5,6 @@ export default class Massager{
 
     constructor(){
         this.history = [];
-        this.pos = 0;
-        this.latPos = 0;
     }
 
     static send(text){
@@ -55,22 +53,25 @@ export default class Massager{
                     '18:34', 'Звонок', '18:50', 'Звонок', '18:55', 'Звонок', '18:56', 'Звонок', '18:58', 'Звонок', '19:04', 'Звонок',
                      '12', 'Воскресенье', '20:31', 'Звонок', '20:44', 'Звонок завершен', '21:33', 'Звонок', 'Сегодня', '17:50', 'Звонок',
                       '17:55', 'Звонок завершен', '17:55', 'Нет ответа', '17:59', 'Звонок', '18:02', 'Звонок', '18:03', 'Звонок', '18:05',
-                       'Звонок', '18:20', "Представление", "Сетка", "Сердце", "Коллекция"];
+                       'Звонок', '18:20', "Представление", "Сетка", "Сердце", "Коллекция", 'ПН', 'Представление "Сетка"',
+                        'NP', '|', 'join.skype.com/Crp4Vn7ts75B', 'Пригласите контакты в Скайпе или поделитесь ссылкой', 'Добавить людей', 'журнал субтитров'];
         const history = [];
 
-        $('[data-text-as-pseudo-element]').each( function(){
+        $('body > div.app-container > div > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div > div:nth-child(3) > div div').each( function(){
             let text = $(this).attr('data-text-as-pseudo-element');
-            if ( forriben.includes(text) === false && /[0-9]+\:[0-9]+/.test(text) === false ) history.push( text);
+            console.log(text);
+            if ( forriben.includes(text) === false && /[0-9]+\:[0-9]+/.test(text) === false ) history.push(text);
         } );
 
 
-        this.history = history;
-        console.log( this.pos, this.history.length );
-        return this.history.slice( this.pos, this.history.length ).join(' ');
+        return history.join(' ');
     }
 
-    synPos(){
-        this.pos = this.history.length - 1;
+    set(q, replace){
+        $('body > div.app-container > div > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div > div:nth-child(3) > div div').each( function(){
+            let str = $(this).attr('data-text-as-pseudo-element');
+            if ( str !== undefined ) $(this).attr('data-text-as-pseudo-element', str.replace(q, replace) );
+        } );
     }
 
 }
