@@ -5,21 +5,23 @@ export default class Bot{
     constructor(config, chat){
         this.config = config;
         this.chat = chat;
-        this.lastAnswer = {};
+        this.lastAnswer = JSON.parse(JSON.stringify(config.questions.type));
     }
 
     launch(){
         const latency = 60; // >= 1 !!!
         return setInterval( () => {
-            let msg = this.chat.get().toLowerCase();
-            let answer = this.getAnswer(msg);
+            let msg = this.chat.get().toLowerCase().trim();
+            let answer = this.getQuestion(msg);
 
-            //console.log(msg, answer, this.lastAnswer);
-            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {chat.send(answer); this.lastAnswer[answer] = { time: Math.floor(Date.now() / 1000) }; }
+            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) { 
+                chat.send(this.config.questions.type[answer.questionType][answer.item]);
+                this.lastAnswer[answer.questionType][answer.item] = Math.floor(Date.now() / 1000);
+                }
         }, 1500 )
     }
 
-    getAnswer(input){
+    getQuestion(input){
         let questionType = 'class';
 
         this.config.name.forEach(element => {
@@ -27,7 +29,7 @@ export default class Bot{
         });
 
         for ( let item in this.config.questions.type[questionType] ) {
-            if ( this.isEqual(input, item, 60) ) return this.config.questions.type[questionType][item];
+            if ( this.isEqual(input, item, 60) ) return {questionType:questionType, item: item};
         }
 
         
@@ -45,13 +47,13 @@ export default class Bot{
             if ( sample.includes( q ) && q.length > 2 ) {count++; sample = sample.replace(q, ''); /*this.chat.set( q, '' );*/ };
         });
 
-        //console.log(count * 100 / sample.split(' ').length, count, sample.split(' ').length, str1, sample);
         return ( count * 100 / sample.split(' ').length >= percent ) ? true: false;
     }
 
     answerIsNotOld(ans, r){
-        if ( Object.keys(this.lastAnswer).includes(ans) ) {
-            return ( Math.floor(Date.now() / 1000) - this.lastAnswer[ans].time >= r ) ? true : false;
+        let qs = this.lastAnswer[ans.questionType];
+        if ( ans.item in qs && isNaN(qs[ans.item]) !== true) {
+            return ( Math.floor(Date.now() / 1000) - qs[ans.item] >= r ) ? true : false;
         }
         else return true;
     }

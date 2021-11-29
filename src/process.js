@@ -9,11 +9,9 @@ const process = new Bot(config, new Massager);
 let processId;
 let openCount = 0;
 let openCall = () => {
-    console.log(openCount);
     
     if ( $('[data-text-as-pseudo-element="Присоединиться к звонку"]').length > 0 && openCount === 0 ){
         openCount++;
-        console.log(openCount);
         setTimeout(() => { 
             $('[data-text-as-pseudo-element="Присоединиться к звонку"]').trigger('click');
             setTimeout(() => { $('[title="Присоединиться"]').trigger('click');
@@ -28,8 +26,8 @@ let openCall = () => {
 
 }
 
-setInterval(() => { if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { clearInterval(processId); openCount = 0;} }, 5000);
-$(document).on('DOMNodeInserted', openCall);
+setInterval(() => { openCall(); if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { clearInterval(processId); $('[title="Отмена"]').trigger('click'); openCount = 0;} }, 5000);
+
 
 
 

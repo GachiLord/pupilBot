@@ -5,6 +5,7 @@ export default class Massager{
 
     constructor(){
         this.history = [];
+        this.selector = 'body > div.app-container > div > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div div';
     }
 
     static send(text){
@@ -56,10 +57,9 @@ export default class Massager{
                        'Звонок', '18:20', "Представление", "Сетка", "Сердце", "Коллекция", 'ПН', 'Представление "Сетка"',
                         'NP', '|', 'join.skype.com/Crp4Vn7ts75B', 'Пригласите контакты в Скайпе или поделитесь ссылкой', 'Добавить людей', 'журнал субтитров'];
         const history = [];
-
-        $('body > div.app-container > div > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div > div:nth-child(3) > div div').each( function(){
+        
+        $(this.selector).each( function(){
             let text = $(this).attr('data-text-as-pseudo-element');
-            console.log(text);
             if ( forriben.includes(text) === false && /[0-9]+\:[0-9]+/.test(text) === false ) history.push(text);
         } );
 
@@ -67,9 +67,10 @@ export default class Massager{
         return history.join(' ');
     }
 
-    set(q, replace){
-        $('body > div.app-container > div > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div > div > div:nth-child(3) > div div').each( function(){
+    static set(q, replace){
+        $(this.selector).each( function(){
             let str = $(this).attr('data-text-as-pseudo-element');
+            console.log(`text:${str}, q:${q}`);
             if ( str !== undefined ) $(this).attr('data-text-as-pseudo-element', str.replace(q, replace) );
         } );
     }

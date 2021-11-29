@@ -1,1 +1,1 @@
-(()=>{let e=document.getElementById("call"),t=document.getElementById("chat");e.addEventListener("click",(()=>{chrome.runtime.sendMessage("open-call-view")})),t.addEventListener("click",(()=>{chrome.runtime.sendMessage("open-chat-view")}))})();
+document.getElementById("call").addEventListener("click",(()=>{chrome.runtime.sendMessage("open-call-view")}));
