@@ -4,7 +4,7 @@ import * as ChromeStorage from "../lib/store"
 
 let storage = ChromeStorage.create(ChromeStorage.SYNC);
 let pupilInfo = await storage.get('pupilInfo');
-let getInfo = () => { try {return prompt( 'Введите, как к вам обращаются(включая падежные формы) через запятую(иван иванов, ваня, вани)' ).split(',').map( i => trim(i) );} catch(e){ alert(`имя не было введено - ${e}`) } }
+let getInfo = () => { try {return prompt( 'Введите, как к вам обращаются(включая падежные формы) через запятую(иван иванов, ваня, вани)' ).split(',').map( i => trim(i) );} catch(e){ alert(`имя не было введено`) } }
 
 if ( pupilInfo == undefined ) pupilInfo = getInfo();
 else if ( confirm(`к вам обращаются ${JSON.stringify(pupilInfo)}?` ) === false ) pupilInfo = getInfo();
@@ -21,7 +21,7 @@ export default {
                     "кто здесь": `${pupilInfo[0]} здесь`,
                     "меня слышно":"да",
                     "свою оценку":"5",
-                    "всё записали":"зваписали",
+                    "всё записали":"записали",
                     "успеваете":"успеваем",
                     "успевает":"успеваем",
                     "все поняли":"поняли",

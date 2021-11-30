@@ -1,1 +1,1 @@
-document.getElementById("call").addEventListener("click",(()=>{chrome.runtime.sendMessage("open-call-view")}));
+document.getElementById("launch").addEventListener("click",(()=>{chrome.runtime.sendMessage("open-call-view")}));

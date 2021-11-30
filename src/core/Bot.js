@@ -14,7 +14,10 @@ export default class Bot{
             let msg = this.chat.get().toLowerCase().trim();
             let answer = this.getQuestion(msg);
 
-            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) { 
+            if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {
+                answer.item.split(' ').forEach( i => { this.chat.set( new RegExp(i, 'i'), '' ); } );
+                if ( answer.questionType === 'pupil' ) this.config.name.forEach( i => { this.chat.set( new RegExp(i, 'i'), '' ); } );
+
                 chat.send(this.config.questions.type[answer.questionType][answer.item]);
                 this.lastAnswer[answer.questionType][answer.item] = Math.floor(Date.now() / 1000);
                 }

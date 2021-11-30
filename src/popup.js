@@ -1,4 +1,4 @@
-let call = document.getElementById("call")
+let call = document.getElementById("launch")
 
 
 call.addEventListener('click', () => {

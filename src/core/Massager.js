@@ -67,10 +67,9 @@ export default class Massager{
         return history.join(' ');
     }
 
-    static set(q, replace){
+    set(q, replace){
         $(this.selector).each( function(){
             let str = $(this).attr('data-text-as-pseudo-element');
-            console.log(`text:${str}, q:${q}`);
             if ( str !== undefined ) $(this).attr('data-text-as-pseudo-element', str.replace(q, replace) );
         } );
     }
