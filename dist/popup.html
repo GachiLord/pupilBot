@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class=".container">
-        <form>
+        <form class= "needs-validation">
             <div class="mb-3">
                 <label class="form-label">К вам обращаются</label>
                 <input type="text" class="form-control" id="user-info">
@@ -20,21 +20,27 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Тип вопросов, на которые должен отвечать бот</label>
-                <select class="form-select">
-                    <option value="all-types">Все типы</option>
-                    <option value="personal">Личные</option>
-                    <option value="class">Ко всей аудитории</option>
+                <select class="form-select" id="qusts-type">
+                    <option value="all-types" selected="">Все типы</option>
+                    <option value="personal" selected="">Личные</option>
+                    <option value="class" selected="">Ко всей аудитории</option>
                   </select>
             </div>
             <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Автоприсоединение к звонку
-                    </label>
+                <label class="form-label">Автоприсоединение к звонку</label>
+                <select class="form-select" id="auto-join">
+                    <option value="true" selected="">Вкл</option>
+                    <option value="false" selected="">Выкл</option>
+                  </select>
                   </div>
             </div>
-            <button id="launch" class="btn btn-primary">Запустить бота</button>
+            <div class="mb-3">
+                <h3 id="status">Статус:</h3>
+            </div>
+            <div class="mb-3">
+                <button id="launch" class="btn btn-primary">Запустить бота</button>
+                <button type="button" class="btn btn-success" id="save">Сохранить настройки</button>
+            </div>
         </form>
     </div>
 </body>

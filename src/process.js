@@ -4,7 +4,7 @@ import Massager from './core/Massager.js'
 import $ from 'jquery'
 
 
-alert('откройте чат нужного звонка, включите субтитры, поспите');
+
 const process = new Bot(config, new Massager);
 let processId;
 let openCount = 0;

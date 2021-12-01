@@ -18,6 +18,8 @@ chrome.runtime.onMessage.addListener(async (msg) => {
       path = './dist/chatWriter.js';
       tabs.chat = tab.id;
       break;
+    case 'isRunning':
+      chrome.runtime.sendMessage( !!tabs.call );
   }
 
   if ( tab.url.includes("skype") ) {

@@ -1,18 +1,14 @@
 import { trim } from "jquery"
-import * as ChromeStorage from "../lib/store"
+import settings from "./settings";
 
 
-let storage = ChromeStorage.create(ChromeStorage.SYNC);
-let pupilInfo = await storage.get('pupilInfo');
-let getInfo = () => { try {return prompt( 'Введите, как к вам обращаются(включая падежные формы) через запятую(иван иванов, ваня, вани)' ).split(',').map( i => trim(i) );} catch(e){ alert(`имя не было введено`) } }
-
-if ( pupilInfo == undefined ) pupilInfo = getInfo();
-else if ( confirm(`к вам обращаются ${JSON.stringify(pupilInfo)}?` ) === false ) pupilInfo = getInfo();
-
-storage.set('pupilInfo', pupilInfo);
+const pupilInfo = new settings().settings;
 
 export default {
-    name: pupilInfo,
+    name: pupilInfo.userInfo.split(',').map( i => trim(i) ),
+    latency: pupilInfo.latency,
+    questionsType: settings.questionsType,
+    autoJoin:settings.autoJoin,
     questions:{
             type:{
                 class:{
