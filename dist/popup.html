@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./bootstrap.min.css" rel="stylesheet">
     <script defer src="popup.js"></script>
 </head>
 <body>
-    <button id="launch">Запустить бота</button>
+    <div class=".container">
+        <form>
+            <div class="mb-3">
+                <label class="form-label">К вам обращаются</label>
+                <input type="text" class="form-control" id="user-info">
+                <div class="form-text">Перечислить через запятую, включая падежные формы</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Задержка ответов на повторяющиеся вопросы</label>
+                <input type="text" class="form-control" id="latency-input">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Тип вопросов, на которые должен отвечать бот</label>
+                <select class="form-select">
+                    <option value="all-types">Все типы</option>
+                    <option value="personal">Личные</option>
+                    <option value="class">Ко всей аудитории</option>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Автоприсоединение к звонку
+                    </label>
+                  </div>
+            </div>
+            <button id="launch" class="btn btn-primary">Запустить бота</button>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -1,6 +1,8 @@
-let call = document.getElementById("launch")
+import './UI/UI.css'
+import $ from 'jquery'
 
 
-call.addEventListener('click', () => {
+
+$('#launch').on('click', function(){
 	chrome.runtime.sendMessage( 'open-call-view' );
-})
+});

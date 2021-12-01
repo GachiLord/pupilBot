@@ -9,7 +9,7 @@ export default class Bot{
     }
 
     launch(){
-        const latency = 60; // >= 1 !!!
+        const latency = 30; // >= 1 !!!
         return setInterval( () => {
             let msg = this.chat.get().toLowerCase().trim();
             let answer = this.getQuestion(msg);

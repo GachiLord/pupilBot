@@ -14,5 +14,17 @@ module.exports = {
   },
   experiments:{
     topLevelAwait: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$|\.css/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
+      },
+    ],
   }
 };
