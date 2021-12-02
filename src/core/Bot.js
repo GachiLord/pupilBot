@@ -9,8 +9,9 @@ export default class Bot{
     }
 
     launch(){
-        const latency = 30; // >= 1 !!!
+        const latency = this.config.latency;
         return setInterval( () => {
+            console.log('works');
             let msg = this.chat.get().toLowerCase().trim();
             let answer = this.getQuestion(msg);
 
@@ -30,6 +31,8 @@ export default class Bot{
         this.config.name.forEach(element => {
             if ( input.includes(element) ) questionType = 'pupil';
         });
+        if ( this.config.questionsType === 'personal' ) questionType = 'pupil';
+        else if ( this.config.questionsType === 'class' ) questionType = 'class';
 
         for ( let item in this.config.questions.type[questionType] ) {
             if ( this.isEqual(input, item, 60) ) return {questionType:questionType, item: item};
