@@ -12,7 +12,6 @@ let processId;
 let openCount = 0;
 let callChecker;
 let openCall = () => {
-    
     if ( $('[data-text-as-pseudo-element="Присоединиться к звонку"]').length > 0 && openCount === 0 ){
         openCount++;
         setTimeout(() => { 
@@ -32,24 +31,26 @@ let openCall = () => {
 
 
 chrome.runtime.onMessage.addListener( async msg => {
-    alert(msg);
+    console.log(msg);
     switch(msg){
         case 'stop':
+            await RunStatus.set(false);
             clearInterval(processId);
             clearInterval(callChecker);
-            await RunStatus.set(false);
             break;
         case 'launch':
-            await RunStatus.set(true);
-            if ( config.autoJoin == true ) {
-                callChecker = setInterval(() => { 
-                    openCall();
-                    if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { 
-                        clearInterval(processId); $('[title="Отмена"]').trigger('click');
-                        openCount = 0;
-                    } }, 5000);
+            if ( await RunStatus.get() == false ) {
+                await RunStatus.set(true);
+                if ( config.autoJoin == String(true) ) {
+                    callChecker = setInterval(() => {
+                        openCall();
+                        if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { 
+                            clearInterval(processId); $('[title="Отмена"]').trigger('click');
+                            openCount = 0;
+                        } }, 5000);
+                }
+                else processId = process.launch();
             }
-            else processId = process.launch();
             break;
     }
 } );

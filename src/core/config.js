@@ -7,14 +7,14 @@ const pupilInfo = new settings().settings;
 export default {
     name: pupilInfo.userInfo.split(',').map( i => trim(i) ),
     latency: pupilInfo.latency,
-    questionsType: settings.questionsType,
-    autoJoin:settings.autoJoin,
+    questionsType: pupilInfo.questionsType,
+    autoJoin: pupilInfo.autoJoin,
     questions:{
             type:{
                 class:{
                     "напишите плюсы": `+`,
                     "поставьте плюсы": `+`,
-                    "кто здесь": `${pupilInfo[0]} здесь`,
+                    "кто здесь": `${pupilInfo.userInfo.split(',').map( i => trim(i) )[0]} здесь`,
                     "меня слышно":"да",
                     "свою оценку":"5",
                     "всё записали":"записали",

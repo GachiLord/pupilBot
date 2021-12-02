@@ -19,10 +19,11 @@ chrome.runtime.onMessage.addListener(async (msg) => {
   let tab = await getCurrentTab();
   let path;
 
-  console.log(msg);
+  console.log(msg, tabs.call);
   switch ( msg ){
     case 'kill-process':
-      if ( await isRunning() ) await chrome.tabs.sendMessage( tabs.call, 'stop' );
+      await RunStatus.set(false);
+      await chrome.tabs.sendMessage( tabs.call, 'stop' );
       break;
     case 'start-process':
       if ( !!tabs.call === false ) {
@@ -32,20 +33,16 @@ chrome.runtime.onMessage.addListener(async (msg) => {
         if ( tab.url.includes("skype") && msg === 'start-process' ) {
           await chrome.scripting.executeScript( { target: {tabId: tab.id}, files: [path] });
           await chrome.tabs.sendMessage( tabs.call, 'launch');
+          await RunStatus.set(true);
         }
 
-      }else await chrome.tabs.sendMessage( tabs.call, 'launch');
+      }else if (await RunStatus.get() == false) {await chrome.tabs.sendMessage( tabs.call, 'launch'); await RunStatus.set(true);}
 
-      await RunStatus.set(true);
   }
 
 } );
 
 
-chrome.tabs.onUpdated.addListener( async tabId => {
-  if ( tabId == tabs.call ) tabs.call = '';
-  await RunStatus.set(!!tabs.call);
-} );
 
 
 

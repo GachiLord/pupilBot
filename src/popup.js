@@ -25,7 +25,6 @@ let isRunning = async () => {
 
 
 setStatus( (await isRunning()) ? 'работает' : 'не работет' );
-$('#launch').html( ( await isRunning()) ? 'Остановить': 'Запустить' );
 setGuide(data.settings.autoJoin);
 $('#user-info').val(data.settings.userInfo);
 $('#latency-input').val( (data.settings.latency == undefined) ? 30: data.settings.latency );
@@ -39,15 +38,11 @@ console.log(data.settings);
 $('#auto-join').on('change', () => { setGuide($('#auto-join option:selected').attr('value')); });
 $('#launch').on('click', async function(event){
 	event.preventDefault();
-	if ( await isRunning() ) await chrome.runtime.sendMessage( 'kill-process' );
-	else{
-		if ( $('#user-info').val() == undefined ) {setStatus('работет в режиме ответов ко всей аудитории'); $('option[value="class"]').attr('selected', 'selected'); }
-
-		await chrome.runtime.sendMessage( 'start-process' );
-		if ( await isRunning() === false ) setStatus('выбрана неверная вкладка');
-	}
-	if ( await isRunning() ) $('#launch').html('Остановить');
-	else $('#launch').html('Запустить');
+	await chrome.runtime.sendMessage( 'start-process' );
+});
+$('#stop').on('click', async function(event){
+	event.preventDefault();
+	await chrome.runtime.sendMessage( 'kill-process' );
 });
 $('#save').on('click', async function(event){
 	event.preventDefault();
