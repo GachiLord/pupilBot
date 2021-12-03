@@ -2,9 +2,9 @@ import * as ChromeStorage from '../lib/store'
 
 
 const storage = ChromeStorage.create(ChromeStorage.SYNC);
-const data = await storage.get('settings');
+let data = await storage.get('settings');
 
-
+if ( data === undefined ) { await storage.set('settings', {} ); data = {}; }
 
 export default class settings{
     constructor(){

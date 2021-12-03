@@ -1,7 +1,7 @@
 import './UI/UI.css'
 import $ from 'jquery'
 import settings from './core/settings';
-import RunStatus from './lib/RunStatus';
+
 
 
 const data = new settings();
@@ -19,12 +19,14 @@ let setGuide = type => {
 }
 
 
+if ( data.settings !== undefined ){
+	setGuide(String(data.settings.autoJoin));
+	$('#user-info').val(data.settings.userInfo);
+	$('#latency-input').val( (data.settings.latency == undefined) ? 30: data.settings.latency );
+	$(`#qusts-type option[value="${data.settings.questionsType}"]`).prop('selected', true);
+	$(`#auto-join option[value="${String(data.settings.autoJoin)}"]`).prop('selected', true);
+}
 
-setGuide(String(data.settings.autoJoin));
-$('#user-info').val(data.settings.userInfo);
-$('#latency-input').val( (data.settings.latency == undefined) ? 30: data.settings.latency );
-$(`#qusts-type option[value="${data.settings.questionsType}"]`).prop('selected', true);
-$(`#auto-join option[value="${String(data.settings.autoJoin)}"]`).prop('selected', true);
 
 
 
