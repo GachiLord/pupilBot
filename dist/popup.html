@@ -11,8 +11,7 @@
         <form class= "needs-validation">
             <div class="mb-3">
                 <label class="form-label">К вам обращаются</label>
-                <input type="text" class="form-control" id="user-info">
-                <div class="form-text">Перечислить через запятую, включая падежные формы</div>
+                <input type="text" class="form-control" id="user-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Перечислить через запятую, включая падежные формы">
             </div>
             <div class="mb-3">
                 <label class="form-label">Задержка ответов на повторяющиеся вопросы</label>
@@ -24,6 +23,7 @@
                     <option value="all-types" selected="">Все типы</option>
                     <option value="personal" selected="">Личные</option>
                     <option value="class" selected="">Ко всей аудитории</option>
+                    <option value="none" selected="">Не отвечать</option>
                   </select>
             </div>
             <div class="mb-3">
@@ -39,9 +39,8 @@
                 <p id="guide"></p>
             </div>
             <div class="mb-3">
-                <button id="launch" class="btn btn-primary">Запустить</button>
-                <button id="stop" class="btn btn-secondary">Остановить</button>
-                <button type="button" class="btn btn-success" id="save">Сохранить настройки</button>
+                <button type="button" class="btn btn-success" id="save" data-bs-toggle="tooltip" data-bs-placement="top" title="Настройки вступят в силу после перезагрузки страницы звонка" aria-describedby="saveHelp">Сохранить настройки</button>
+                <div id="saveHelp" class="form-text">*Настройки вступят в силу после перезагрузки страницы звонка</div>
             </div>
         </form>
     </div>

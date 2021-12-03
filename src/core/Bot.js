@@ -13,7 +13,7 @@ export default class Bot{
         return setInterval( () => {
             console.log('works');
             let msg = this.chat.get().toLowerCase().trim();
-            let answer = this.getQuestion(msg);
+            let answer = ( this.config.questionsType !== 'none' ) ? this.getQuestion(msg) : undefined;
 
             if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {
                 answer.item.split(' ').forEach( i => { this.chat.set( new RegExp(i, 'i'), '' ); } );

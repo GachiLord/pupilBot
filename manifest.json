@@ -19,7 +19,11 @@
     "host_permissions":[
       "https://web.skype.com/*"
     ],
-    "background": {
-      "service_worker": "dist/app.js"
-    }
+    "content_scripts": [
+      {
+        "matches": ["https://web.skype.com/*"],
+        "css": ["dist/bootstrap.min.css"],
+        "js": ["dist/process.js"]
+      }
+    ]
   }

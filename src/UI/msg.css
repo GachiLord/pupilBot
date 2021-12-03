@@ -1,0 +1,11 @@
+.controller {
+    padding: 5vh;
+    position: absolute;
+    background: #dee2e6;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    z-index: 999;
+    text-align: center;
+    opacity: 0.9;
+}

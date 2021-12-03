@@ -5,7 +5,6 @@ import RunStatus from './lib/RunStatus';
 
 
 const data = new settings();
-let setStatus = status => { let msg = 'Состояние: '; $('#status').html(msg + status); }
 let setGuide = type => {
 	let msg = '1)Открыть вкладу web.skype.com 2)Включить показ субтитров для всех звонков в настройках skype ';
 	switch(type){
@@ -18,38 +17,25 @@ let setGuide = type => {
 	}
 	$('#guide').html(msg);
 }
-let isRunning = async () => {
-	return await RunStatus.get();
-}
 
 
 
-setStatus( (await isRunning()) ? 'работает' : 'не работет' );
-setGuide(data.settings.autoJoin);
+setGuide(String(data.settings.autoJoin));
 $('#user-info').val(data.settings.userInfo);
 $('#latency-input').val( (data.settings.latency == undefined) ? 30: data.settings.latency );
 $(`#qusts-type option[value="${data.settings.questionsType}"]`).prop('selected', true);
-$(`#auto-join option[value="${data.settings.autoJoin}"]`).prop('selected', true);
+$(`#auto-join option[value="${String(data.settings.autoJoin)}"]`).prop('selected', true);
 
 
 
 
-console.log(data.settings);
 $('#auto-join').on('change', () => { setGuide($('#auto-join option:selected').attr('value')); });
-$('#launch').on('click', async function(event){
-	event.preventDefault();
-	await chrome.runtime.sendMessage( 'start-process' );
-});
-$('#stop').on('click', async function(event){
-	event.preventDefault();
-	await chrome.runtime.sendMessage( 'kill-process' );
-});
+
 $('#save').on('click', async function(event){
 	event.preventDefault();
 	data.settings.userInfo = $('#user-info').val();
 	data.settings.latency = $('#latency-input').val();
 	data.settings.questionsType = $('#qusts-type option:selected').attr('value');
-	data.settings.autoJoin = $('#auto-join option:selected').attr('value');
+	data.settings.autoJoin = ( $('#auto-join option:selected').attr('value') === 'true' ) ? true: false;
 	await data.save();
-	setStatus('Сохранено');
 });
