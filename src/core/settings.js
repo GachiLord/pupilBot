@@ -14,7 +14,7 @@ export default class settings{
     async save(){
         await this._storage.set('settings', this.settings);
     }
-    async getLatest(){
+    static async getLatest(){
         return await storage.get('settings');
     }
 

@@ -18,6 +18,7 @@ let autoJoin;
 let openCount = 0;
 let openCall = () => {
     console.log(openCount)
+    console.log($('[aria-label="Завершить звонок"]').length);
     if ( $('[data-text-as-pseudo-element="Присоединиться к звонку"]').length > 0 && openCount === 0 ){
         openCount++;
         setTimeout(() => { 
@@ -29,16 +30,17 @@ let openCall = () => {
                 }, 2000);
             }, 2000);
         }, 2000);
+    }
     if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { 
         clearInterval(processId); $('[title="Отмена"]').trigger('click');
         openCount = 0;
     }
-    if ( $('[data-text-as-pseudo-element="Субтитры запущены на русский."]').length > 0 && openCount === 0 ) {
+    if ( $('[aria-label="Завершить звонок"]').length > 0 && openCount === 0 ) {
         openCount++;
         processId = process.launch();
     }
 }
-}
+
 
 
 

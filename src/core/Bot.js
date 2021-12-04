@@ -27,12 +27,11 @@ export default class Bot{
 
     getQuestion(input){
         let questionType = 'class';
-
         this.config.name.forEach(element => {
             if ( input.includes(element) ) questionType = 'pupil';
         });
-        if ( this.config.questionsType === 'personal' ) questionType = 'pupil';
-        else if ( this.config.questionsType === 'class' ) questionType = 'class';
+        if ( this.config.questionsType === 'class' ) questionType = 'class';
+        if ( questionType === 'class' && this.config.questionsType === 'personal' ) return;
 
         for ( let item in this.config.questions.type[questionType] ) {
             if ( this.isEqual(input, item, 60) ) return {questionType:questionType, item: item};
