@@ -9,19 +9,26 @@ export default class Bot{
     }
 
     launch(){
+        console.log('working');
         const latency = this.config.latency;
         return setInterval( () => {
-            console.log('works');
             let msg = this.chat.get().toLowerCase().trim();
             let answer = ( this.config.questionsType !== 'none' ) ? this.getQuestion(msg) : undefined;
 
             if ( answer !== undefined && this.answerIsNotOld( answer , latency ) ) {
-                answer.item.split(' ').forEach( i => { this.chat.set( new RegExp(i, 'i'), '' ); } );
-                if ( answer.questionType === 'pupil' ) this.config.name.forEach( i => { this.chat.set( new RegExp(i, 'i'), '' ); } );
-
-                chat.send(this.config.questions.type[answer.questionType][answer.item]);
-                this.lastAnswer[answer.questionType][answer.item] = Math.floor(Date.now() / 1000);
+                switch(this.config.questionsType){
+                    case 'all-types':
+                        this.sendAnswer(answer);
+                        break;
+                    case 'class':
+                        if ( answer.questionType === 'class' ) this.sendAnswer(answer);
+                        break;
+                    case 'personal':
+                        if ( answer.questionType === 'pupil' ) this.sendAnswer(answer);
+                        break;
                 }
+                
+            }
         }, 1500 )
     }
 
@@ -30,8 +37,6 @@ export default class Bot{
         this.config.name.forEach(element => {
             if ( input.includes(element) ) questionType = 'pupil';
         });
-        if ( this.config.questionsType === 'class' ) questionType = 'class';
-        if ( questionType === 'class' && this.config.questionsType === 'personal' ) return;
 
         for ( let item in this.config.questions.type[questionType] ) {
             if ( this.isEqual(input, item, 60) ) return {questionType:questionType, item: item};
@@ -61,5 +66,10 @@ export default class Bot{
             return ( Math.floor(Date.now() / 1000) - qs[ans.item] >= r ) ? true : false;
         }
         else return true;
+    }
+
+    sendAnswer(answer){
+        chat.send(this.config.questions.type[answer.questionType][answer.item]);
+        this.lastAnswer[answer.questionType][answer.item] = Math.floor(Date.now() / 1000);
     }
 }
