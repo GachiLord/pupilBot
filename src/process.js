@@ -17,7 +17,8 @@ let processId;
 let autoJoin;
 let openCount = 0;
 let openCall = () => {
-    if ( $('[data-text-as-pseudo-element="Присоединиться к звонку"]').length > 0 ){
+    if ( $('[data-text-as-pseudo-element="Присоединиться к звонку"]').length > 0 && openCount === 0 ){
+        openCount++;
         setTimeout(() => { 
             $('[data-text-as-pseudo-element="Присоединиться к звонку"]').trigger('click');
             setTimeout(() => { $('[title="Присоединиться"]').trigger('click');
@@ -28,18 +29,21 @@ let openCall = () => {
             }, 2000);
         }, 2000);
     }
-    if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) { 
+    if ( $('[data-text-as-pseudo-element="Позвонить"]').length > 0 ) {
+        openCount = 0;
+        processId = undefined;
         clearInterval(processId);
         $('[title="Отмена"]').trigger('click');
         $('[title="Закрыть"]').trigger('click');
     }
-    if ( $('[aria-label="Завершить звонок"]').length > 0 && processId === undefined ) {
+    if ( $('[aria-label="Завершить звонок"]').length > 0 && openCount === 0 ) {
+        openCount++;
         processId = process.launch();
     }
 }
 
 
-setInterval( () => { console.log(processId, autoJoin) }, 1000 );
+setInterval( () => { console.log( processId, autoJoin ) }, 1000 );
 
 setStatus(isRunning);
 $('#action').on('click', ()=>{ 
