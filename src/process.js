@@ -43,8 +43,6 @@ let openCall = () => {
 }
 
 
-setInterval( () => { console.log( processId, autoJoin ) }, 1000 );
-
 setStatus(isRunning);
 $('#action').on('click', ()=>{ 
     isRunning = !isRunning;

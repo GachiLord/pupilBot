@@ -22,7 +22,8 @@ let setGuide = type => {
 if ( data.settings !== undefined ){
 	setGuide(String(data.settings.autoJoin));
 	$('#user-info').val(data.settings.userInfo);
-	$('#latency-input').val( (data.settings.latency == undefined) ? 30: data.settings.latency );
+	$('#reason').val(data.settings.reason);
+	$('#latency-input').val( (data.settings.latency == undefined) ? 60: data.settings.latency );
 	$(`#qusts-type option[value="${data.settings.questionsType}"]`).prop('selected', true);
 	$(`#auto-join option[value="${String(data.settings.autoJoin)}"]`).prop('selected', true);
 }
@@ -35,6 +36,7 @@ $('#auto-join').on('change', () => { setGuide($('#auto-join option:selected').at
 
 $('#save').on('click', async function(event){
 	event.preventDefault();
+	data.settings.reason = $('#reason').val();
 	data.settings.userInfo = $('#user-info').val();
 	data.settings.latency = $('#latency-input').val();
 	data.settings.questionsType = $('#qusts-type option:selected').attr('value');
