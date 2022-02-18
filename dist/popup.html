@@ -10,12 +10,13 @@
     <div class=".container">
         <form class= "needs-validation">
             <div class="mb-3">
-                <label class="form-label">К вам обращаются</label>
+                <label class="form-label">К вам обращаются(перечислить через пробел включая падежные формы)</label>
                 <input type="text" class="form-control" id="user-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Перечислить через запятую, включая падежные формы">
             </div>
             <div class="mb-3">
-                <label class="form-label">Как отвечать, если бот не нашел ответ. Описать причину, почему не можете ответить</label>
+                <label class="form-label">Как отвечать, когда к вам обратились, но бот не нашел, что ответить?</label>
                 <input type="text" class="form-control" id="reason" data-bs-toggle="tooltip" data-bs-placement="top" title="причина, почему не можете ответить">
+                <div id="saveHelp" class="form-text">*рекомендуется оставить поле пустым, так как частые срабатывания выглядят подозрительно</div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Задержка ответов на повторяющиеся вопросы</label>

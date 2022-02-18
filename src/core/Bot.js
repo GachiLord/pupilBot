@@ -1,4 +1,4 @@
-import chat from './Massager'
+import chat from './Massager.js'
 
 
 export default class Bot{
@@ -8,6 +8,7 @@ export default class Bot{
         this.lastAnswer = Object.assign( conf.class, conf.pupil );
         this.config = config;
         this.chat = chat;
+        this.percent = 60;
     }
 
     launch(){
@@ -43,25 +44,36 @@ export default class Bot{
 
         for ( let item in conf[questionType] ) {
             for (let i in conf[questionType][item]){
-                if ( this.isEqual(input, i, 60) ) return {questionType: questionType, item: item, i: i};
+                if ( Bot.isEqual(input, i, this.percent) ) return {questionType: questionType, item: item, i: i};
             }
         }
 
     }
 
-    isEqual(str1, str2, percent){
+    static isEqual(str1, str2, percent){
         if ( str1.length === 0 ) return false;
 
-        let question = str1.split(' ');
-        let sample = str2;
+        let question = str1.toLowerCase().split(' ');
+        let sample = str2.toLowerCase().split(' ');
         let count = 0;
+        let positions = [];
+        let areElsClose = (arr) => { 
+            if ( arr.length === 0 ) return false;
+            if ( ( arr.reduce( (prev, cur) => { if ( Math.abs(cur - prev) > 1 ) return false; } ) ) !== false ) return true;
+            else return false;
+        }
+
 
         question.forEach(element => {
             let q = element.trim().replace(/[,.?]/, '');
-            if ( sample.includes( q ) && q.length > 2 ) {count++; sample = sample.replace(q, ''); };
+            if ( sample.includes( q ) && q.length > 2 ) { count++; positions.push( question.indexOf(element) ); };
         });
-
-        return ( count * 100 / sample.split(' ').length >= percent ) ? true: false;
+        console.log(count * 100 / sample.length, areElsClose(positions))
+        if ( positions.length > 0 ) {
+            if ( areElsClose(positions) && count * 100 / sample.length >= percent ) return true;
+            else return false;
+        }
+        else return false;
     }
 
     answerIsNotOld(ans, r){
